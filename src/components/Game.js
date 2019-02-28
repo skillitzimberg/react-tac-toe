@@ -21,6 +21,7 @@ class Game extends React.Component {
     const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[history.length - 1];
     const squares = current.squares.slice();
+
     console.log('history:', history);
     console.log('current:', current);
     console.log('squares:', squares);
@@ -29,15 +30,15 @@ class Game extends React.Component {
       return;
     }
 
-    let mark = (this.state.xIsNext) ? 'X' : 'O';
+    squares[i] = (this.state.xIsNext) ? 'X' : 'O';
 
     const action = {
       type: 'MAKE_MOVE',
-      history: this.state.history,
-      i: i,
-      stepNumber: this.state.stepNumber,
-      xIsNext: this.state.xIsNext,
-      mark: mark,
+      history: history.concat([{
+        squares: squares,
+      }]),
+      stepNumber: history.length,
+      xIsNext: !this.state.xIsNext,
     }
     console.log('MAKE_MOVE action', action);
     dispatch(action);
