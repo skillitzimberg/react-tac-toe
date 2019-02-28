@@ -1,6 +1,6 @@
 import React from 'react';
 import Board from './Board';
-import { Switch, Route, withRouter } from 'react-router-dom';
+// import { Switch, Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 class Game extends React.Component {
@@ -21,6 +21,9 @@ class Game extends React.Component {
     const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[history.length - 1];
     const squares = current.squares.slice();
+    console.log('history:', history);
+    console.log('current:', current);
+    console.log('squares:', squares);
 
     if (calculateWinner(squares) || squares[i]) {
       return;
@@ -34,7 +37,6 @@ class Game extends React.Component {
       i: i,
       stepNumber: this.state.stepNumber,
       xIsNext: this.state.xIsNext,
-      squares: squares,
       mark: mark,
     }
     console.log('MAKE_MOVE action', action);
@@ -124,4 +126,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default withRouter(connect(mapStateToProps)(Game));
+export default connect(mapStateToProps)(Game);

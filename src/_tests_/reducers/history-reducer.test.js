@@ -1,4 +1,4 @@
-import historyReducer from './../../src/reducers/history-reducer';
+import historyReducer from './../../reducers/history-reducer';
 
 describe("historyReducer", () => {
 

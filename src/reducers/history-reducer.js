@@ -1,7 +1,9 @@
 export default ( state = {}, action ) => {
   switch (action.type) {
     case 'MAKE_MOVE':
-      const { history, stepNumber, xIsNext, i, squares, mark } = action;
+      const { history, stepNumber, xIsNext, i, mark } = action;
+      const current = history[history.length - 1];
+      const squares = current.squares.slice();
 
       squares[i] = mark;
 
@@ -9,7 +11,7 @@ export default ( state = {}, action ) => {
         history: history.concat([{
           squares: squares,
         }]),
-        stepNumber: history.length,
+        stepNumber: stepNumber + 1,
         xIsNext: !xIsNext,
       });
       console.log('history-reducer', newState);
