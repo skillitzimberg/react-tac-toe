@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 class Game extends React.Component {
   constructor(props) {
     super(props);
+    console.log('Game props:', props);
     this.state = {
       history: [{
         squares: Array(9).fill(null),
@@ -16,6 +17,7 @@ class Game extends React.Component {
   }
 
   handleClick(i) {
+    const { dispatch } = this.props;
     const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[history.length - 1];
     const squares = current.squares.slice();
@@ -24,15 +26,27 @@ class Game extends React.Component {
       return;
     }
 
-    squares[i] = (this.state.xIsNext) ? 'X' : 'O';
+    let mark = (this.state.xIsNext) ? 'X' : 'O';
 
-    this.setState({
-      history: history.concat([{
-        squares: squares,
-      }]),
-      stepNumber: history.length,
-      xIsNext: !this.state.xIsNext,
-    });
+    const action = {
+      type: 'MAKE_MOVE',
+      history: this.state.history,
+      i: i,
+      stepNumber: this.state.stepNumber,
+      xIsNext: this.state.xIsNext,
+      squares: squares,
+      mark: mark,
+    }
+    console.log('MAKE_MOVE action', action);
+    dispatch(action);
+
+    // this.setState({
+    //   history: history.concat([{
+    //     squares: squares,
+    //   }]),
+    //   stepNumber: history.length,
+    //   xIsNext: !this.state.xIsNext,
+    // });
   }
 
   jumpTo(step) {
@@ -104,6 +118,7 @@ function calculateWinner(squares) {
 }
 
 const mapStateToProps = (state) => {
+  console.log('Game state:', state);
   return {
     history: state.history
   }
